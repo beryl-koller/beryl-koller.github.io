@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>J'apprends l'alphabet</title>
+  <style>
+    body {
+      background-color: #f5f5dc; /* Light beige background */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #letterContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .letter {
+      font-size: 75vh;
+      font-weight: bold;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .button-container {
+      display: flex;
+    }
+
+    button {
+      margin: 0 10px;
+      padding: 20px;
+      background-color: #FFFAFA; /* Light Beige background */
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    button img {
+      width: 40px; /* Adjust the size as needed */
+      height: 40px; /* Adjust the size as needed */
+    }
+  </style>
+</head>
+<body>
+
+<div id="letterContainer">
+  <div id="letter" class="letter"></div>
+  <div class="button-container">
+    <button onclick="speakLetter()">
+      <img src="./icones/ecouter.svg" alt="Ecouter" />
+    </button>
+    <button onclick="nextLetter()">
+      <img src="./icones/suivant.svg" alt="Suivant" />
+    </button>
+  </div>
+</div>
+
+<script>
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let shuffledLetters = shuffle(letters.split(''));
+  let currentLetterIndex = -1;
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  function speakLetter() {
+    if (currentLetterIndex >= 0 && currentLetterIndex < shuffledLetters.length) {
+      const letter = shuffledLetters[currentLetterIndex];
+      const audio = new Audio(`./sons/${letter}.mp3`);
+      audio.play();
+    }
+  }
+
+  function nextLetter() {
+    currentLetterIndex = (currentLetterIndex + 1) % shuffledLetters.length;
+    const letterElement = document.getElementById('letter');
+    letterElement.textContent = shuffledLetters[currentLetterIndex];
+    letterElement.style.color = getRandomColor();
+  }
+
+  // Initial load
+  nextLetter();
+</script>
+
+</body>
+</html>
