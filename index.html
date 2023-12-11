@@ -86,7 +86,7 @@
 
   function speakLetter() {
     if (currentLetterIndex >= 0 && currentLetterIndex < shuffledLetters.length) {
-      const letter = shuffledLetters[currentLetterIndex];
+      const letter = shuffledLetters[currentLetterIndex].toLowerCase();
       const audio = new Audio(`./sons/${letter}.mp3`);
       audio.play();
     }
